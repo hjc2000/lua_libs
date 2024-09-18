@@ -28,3 +28,13 @@ function Servo.EI.Set(ei_index, value)
 		SRV_EI(ei_index, 0)
 	end
 end
+
+--- 让 EI 接收到一个上升沿
+--- @param ei_index integer EI 索引
+function Servo.EI.TriggerRisingEdge(ei_index)
+	Servo.EI.Set(ei_index, false)
+	Servo.Timer.Delay(5)
+	Servo.EI.Set(ei_index, true)
+	Servo.Timer.Delay(5)
+	Servo.EI.Set(ei_index, false)
+end
