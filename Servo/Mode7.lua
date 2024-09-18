@@ -6,14 +6,6 @@ if (Servo.Mode7 == nil) then
 	Servo.Mode7 = {}
 end
 
-if (Servo.Core == nil) then
-	Servo.Core = {}
-end
-
-if (Servo.EI == nil) then
-	Servo.EI = {}
-end
-
 --- 配置成模式 7
 --- @note 会占用一些通信 EI。
 function Servo.Mode7.Config()
@@ -62,6 +54,29 @@ function Servo.Mode7.Config()
 	Servo.Param.Set(1, 1, 7)
 	ConfigEI()
 end
+
+---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------
+--- 设置成模式 7 后，向其他模块注入一些模式 7 下独有的函数。
+---------------------------------------------------------------------------------------------
+
+if (Servo.Core == nil) then
+	Servo.Core = {}
+end
+
+if (Servo.EI == nil) then
+	Servo.EI = {}
+end
+
 
 --- 使能伺服
 function Servo.Core.Enable()
