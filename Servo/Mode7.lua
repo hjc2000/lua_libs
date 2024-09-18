@@ -95,7 +95,7 @@ function Servo.Mode7.SetSpeedAndRun(value)
 		Servo.EI.SetReverseSignal(false)
 	end
 
-	Servo.Param.SetMaxSpeedInPositonAndSpeedControlMode(value)
+	Servo.Param.SetSpeedLimit(value)
 	AXIS_SPEED(value)
 
 	if (value > 0) then

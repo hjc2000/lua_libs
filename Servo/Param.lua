@@ -68,12 +68,12 @@ end
 
 --- 位置控制和速度控制时的最大转速。单位：rpm
 --- @return integer
-function Servo.Param.MaxSpeedInPositonAndSpeedControlMode()
+function Servo.Param.SpeedLimit()
 	return Servo.Param.Get(1, 25)
 end
 
 --- 设置位置控制和速度控制时的最大转速。单位：rpm
 --- @param value integer
-function Servo.Param.SetMaxSpeedInPositonAndSpeedControlMode(value)
+function Servo.Param.SetSpeedLimit(value)
 	Servo.Param.Set(1, 25, value)
 end
