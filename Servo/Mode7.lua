@@ -10,6 +10,10 @@ if (Servo.Core == nil) then
 	Servo.Core = {}
 end
 
+if (Servo.EI == nil) then
+	Servo.EI = {}
+end
+
 --- 配置成模式 7
 --- @note 会占用一些通信 EI。
 function Servo.Mode7.Config()
@@ -67,4 +71,28 @@ end
 --- 禁用伺服
 function Servo.Core.Disable()
 	Servo.EI.Set(9, false)
+end
+
+--- 获取 EI 正转信号的值
+--- @return boolean
+function Servo.EI.ForwardSignal()
+	return Servo.EI.Get(10)
+end
+
+--- 设置 EI 正转信号的值
+--- @param value boolean
+function Servo.EI.SetForwardSignal(value)
+	Servo.EI.Set(10, value)
+end
+
+--- 获取 EI 反转信号的值
+--- @return boolean
+function Servo.EI.ReverseSignal()
+	return Servo.EI.Get(11)
+end
+
+--- 设置 EI 反转信号的值
+--- @param value boolean
+function Servo.EI.SetReverseSignal(value)
+	Servo.EI.Set(11, value)
 end
