@@ -6,6 +6,10 @@ if (Servo.Mode7 == nil) then
 	Servo.Mode7 = {}
 end
 
+if (Servo.Core == nil) then
+	Servo.Core = {}
+end
+
 --- 配置成模式 7
 --- @note 会占用一些通信 EI。
 function Servo.Mode7.Config()
@@ -53,4 +57,14 @@ function Servo.Mode7.Config()
 	-- 配置成模式 7
 	Servo.Param.Set(1, 1, 7)
 	ConfigEI()
+end
+
+--- 使能伺服
+function Servo.Core.Enable()
+	Servo.EI.Set(9, true)
+end
+
+--- 禁用伺服
+function Servo.Core.Disable()
+	Servo.EI.Set(9, false)
 end
