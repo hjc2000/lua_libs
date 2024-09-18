@@ -1,0 +1,21 @@
+{
+	"Lua.diagnostics.globals": [
+		"SRV_PARA",
+		"AXIS_SPEED",
+		"SRV_EI",
+		"DELAY",
+		"TIM_START",
+		"TIM_STOP",
+		"TIM_CHECK",
+		"TIM_RESET",
+		"SRV_MON",
+		"DD",
+		"M",
+		"M_EVENT",
+		"AXIS_MOVEABS",
+		"SRV_EOUT",
+	],
+	"Lua.workspace.library": [
+		"${env:lua_libs}"
+	],
+}

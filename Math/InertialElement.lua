@@ -1,4 +1,10 @@
-InertialElement = {}
+if (Math == nil) then
+	Math = {}
+end
+
+if (Math.InertialElement == nil) then
+	Math.InertialElement = {}
+end
 
 --- 创建一个惯性环节
 --- @param T number 惯性时间常数
@@ -6,7 +12,7 @@ InertialElement = {}
 --- @param resolution number 分辨率。当前输出离输入差距小于多少时，就直接将输出值赋值为输入，
 --- 避免迟迟不收敛甚至到最后超出浮点精度。
 --- @return table 上下文
-function InertialElement.New(T, sample_interval, resolution)
+function Math.InertialElement.New(T, sample_interval, resolution)
 	local context = {}
 	context.T = T
 	context.sample_interval = sample_interval
@@ -22,7 +28,7 @@ end
 --- @param context table 上下文
 --- @param x number 输入值
 --- @return number 输出值
-function InertialElement.Input(context, x)
+function Math.InertialElement.Input(context, x)
 	context.y = context.ky * context.y + context.kx * x
 
 	if (math.abs(context.y - x) < context.resolution) then
@@ -35,15 +41,6 @@ end
 --- 获取惯性环节当前输出
 --- @param context any
 --- @return number
-function InertialElement.CurrentOutput(context)
+function Math.InertialElement.CurrentOutput(context)
 	return context.y
 end
-
--- local _inertial_element = InertialElement.New(0.05, 0.010, 0.001)
-
--- for i = 0, 100 do
--- 	InertialElement.Input(_inertial_element, 5)
--- 	print(InertialElement.CurrentOutput(_inertial_element))
--- end
-
-return InertialElement
