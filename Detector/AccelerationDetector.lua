@@ -12,9 +12,10 @@ require("Math.InertialElement")
 --- 执行检测
 function Detector.AccelerationDetector.Detect()
 	if (Detector.AccelerationDetector._inertial_element == nil) then
-		--- 分辨率选择 0.1，避免收敛速度过慢。
-		--- 加速度小于 0.1，也就是 10ms 内速度差小于 1rpm，就认为加速度达到 0 了。
-		Detector.AccelerationDetector._inertial_element = Math.InertialElement.New(0.05, 0.010, 0.1)
+		--- Servo.Timer.Period() 默认值是 10ms，10 / 100 = 0.1 加速度小于 0.1，
+		--- 也就是 10ms 内速度差小于 1rpm，就认为加速度达到 0 了。
+		Detector.AccelerationDetector._inertial_element =
+			Math.InertialElement.New(0.05, 0.010, 0.1)
 	end
 
 	local current_feedback_speed = Servo.Feedback.Speed()
