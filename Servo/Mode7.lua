@@ -154,6 +154,10 @@ if (Servo.EI == nil) then
 	Servo.EI = {}
 end
 
+if (Servo.EO == nil) then
+	Servo.EO = {}
+end
+
 
 --- 使能伺服
 function Servo.Core.Enable()
@@ -187,4 +191,11 @@ end
 --- @param value boolean
 function Servo.EI.SetReverseSignal(value)
 	Servo.EI.Set(11, value)
+end
+
+--- 定位结束（定位完成）信号
+--- @return boolean
+function Servo.EO.PositioningCompletedSignal()
+	-- EOUT2 默认的功能代码是 2，即定位完成信号。
+	return Servo.EO.Get(2)
 end
