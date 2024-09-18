@@ -55,6 +55,35 @@ function Servo.Mode7.Config()
 	ConfigEI()
 end
 
+--- 切换到定位模式
+function Servo.Mode7.ChangeToPositionMode()
+	Servo.EI.SetForwardSignal(false)
+	Servo.EI.SetReverseSignal(false)
+	Servo.CancelPositioning()
+
+	Servo.EI.Set(12, false)
+end
+
+--- 切换到速度控制模式
+function Servo.Mode7.ChangeToSpeedMode()
+	Servo.EI.SetForwardSignal(false)
+	Servo.EI.SetReverseSignal(false)
+	Servo.CancelPositioning()
+
+	Servo.EI.Set(12, true)
+	Servo.EI.Set(13, false)
+end
+
+--- 切换到转矩控制模式
+function Servo.Mode7.ChangeToTorqueMode()
+	Servo.EI.SetForwardSignal(false)
+	Servo.EI.SetReverseSignal(false)
+	Servo.CancelPositioning()
+
+	Servo.EI.Set(12, true)
+	Servo.EI.Set(13, true)
+end
+
 ---------------------------------------------------------------------------------------------
 
 
