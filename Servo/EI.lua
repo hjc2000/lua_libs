@@ -33,3 +33,29 @@ function Servo.EI.TriggerRisingEdge(ei_index)
 	Servo.Timer.Delay(5)
 	Servo.EI.Set(ei_index, false)
 end
+
+--- 是否有硬件 EI 被配置为使能信号，有的话返回 true，没有返回 false。
+--- @return boolean
+function Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()
+	if (Servo.Param.Get(3, 1) == 1) then
+		return true
+	end
+
+	if (Servo.Param.Get(3, 2) == 1) then
+		return true
+	end
+
+	if (Servo.Param.Get(3, 3) == 1) then
+		return true
+	end
+
+	if (Servo.Param.Get(3, 4) == 1) then
+		return true
+	end
+
+	if (Servo.Param.Get(3, 5) == 1) then
+		return true
+	end
+
+	return false
+end

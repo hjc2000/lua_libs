@@ -11,13 +11,12 @@ end
 function Servo.Mode7.Config()
 	--- 将 EI 9 配置为使能信号
 	local function ConfigEI()
-		if (Servo.Param.Get(3, 1) == 1) then
-			-- 默认状态下，EI1 是伺服使能，想要让 EI9 是伺服使能，需要释放 EI1
-			Servo.Param.Set(3, 1, 0)
+		if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
+			-- EI9 配置为使能
+			Servo.Param.Set(3, 9, 1)
+		else
+			print("有硬件 EI 被配置为使能信号，无法将 EI9 配置为使能信号")
 		end
-
-		-- EI9 配置为使能
-		Servo.Param.Set(3, 9, 1)
 
 		-- EI10
 		-- 正转指令
@@ -133,16 +132,6 @@ function Servo.Mode7.Stop()
 end
 
 ---------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
----------------------------------------------------------------------------------------------
 --- 设置成模式 7 后，向其他模块注入一些模式 7 下独有的函数。
 ---------------------------------------------------------------------------------------------
 
@@ -161,12 +150,22 @@ end
 
 --- 使能伺服
 function Servo.Core.Enable()
-	Servo.EI.Set(9, true)
+	if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
+		-- 没有硬件 EI 被配置为使能时才有效
+		Servo.EI.Set(9, true)
+	else
+		print("有硬件 EI 被配置为使能信号，无法将 EI9 配置为使能信号，因此无法使能伺服。")
+	end
 end
 
 --- 禁用伺服
 function Servo.Core.Disable()
-	Servo.EI.Set(9, false)
+	if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
+		-- 没有硬件 EI 被配置为使能时才有效
+		Servo.EI.Set(9, false)
+	else
+		print("有硬件 EI 被配置为使能信号，无法将 EI9 配置为使能信号，因此无法禁用伺服。")
+	end
 end
 
 --- 获取 EI 正转信号的值
