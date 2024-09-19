@@ -13,6 +13,7 @@ function Servo.Timer.Delay(milliseconds)
 end
 
 --- 定时周期。单位：ms
+--- 主循环中使用定时器需要遵守本属性，将周期设为本属性。
 --- @return integer
 function Servo.Timer.Period()
 	return 10

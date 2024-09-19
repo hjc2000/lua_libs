@@ -6,11 +6,6 @@ if (Servo.EI == nil) then
 	Servo.EI = {}
 end
 
-
-
-
-
-
 --- 获取 EI
 --- @param ei_index integer EI 索引
 --- @return boolean

@@ -6,10 +6,6 @@ if (Servo.EO == nil) then
 	Servo.EO = {}
 end
 
-
-
-
-
 --- 获取输出端子的值
 --- @param index any
 --- @return boolean
