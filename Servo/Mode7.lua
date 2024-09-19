@@ -49,9 +49,77 @@ function Servo.Mode7.Config()
 		Servo.Param.Set(3, 16, 32)
 	end
 
+	-- 向其他模块注入一些函数
+	local function Inject()
+		if (Servo.Core == nil) then
+			Servo.Core = {}
+		end
+
+		if (Servo.EI == nil) then
+			Servo.EI = {}
+		end
+
+		if (Servo.EO == nil) then
+			Servo.EO = {}
+		end
+
+
+		--- 使能伺服
+		function Servo.Core.Enable()
+			if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
+				-- 没有硬件 EI 被配置为使能时才有效
+				Servo.EI.Set(9, true)
+			else
+				print("有硬件 EI 被配置为使能信号，无法将 EI9 配置为使能信号，因此无法使能伺服。")
+			end
+		end
+
+		--- 禁用伺服
+		function Servo.Core.Disable()
+			if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
+				-- 没有硬件 EI 被配置为使能时才有效
+				Servo.EI.Set(9, false)
+			else
+				print("有硬件 EI 被配置为使能信号，无法将 EI9 配置为使能信号，因此无法禁用伺服。")
+			end
+		end
+
+		--- 获取 EI 正转信号的值
+		--- @return boolean
+		function Servo.EI.ForwardSignal()
+			return Servo.EI.Get(10)
+		end
+
+		--- 设置 EI 正转信号的值
+		--- @param value boolean
+		function Servo.EI.SetForwardSignal(value)
+			Servo.EI.Set(10, value)
+		end
+
+		--- 获取 EI 反转信号的值
+		--- @return boolean
+		function Servo.EI.ReverseSignal()
+			return Servo.EI.Get(11)
+		end
+
+		--- 设置 EI 反转信号的值
+		--- @param value boolean
+		function Servo.EI.SetReverseSignal(value)
+			Servo.EI.Set(11, value)
+		end
+
+		--- 定位结束（定位完成）信号
+		--- @return boolean
+		function Servo.EO.PositioningCompletedSignal()
+			-- EOUT2 默认的功能代码是 2，即定位完成信号。
+			return Servo.EO.Get(2)
+		end
+	end
+
 	-- 配置成模式 7
 	Servo.Param.Set(1, 1, 7)
 	ConfigEI()
+	Inject()
 end
 
 --- 切换到定位模式
@@ -129,72 +197,4 @@ end
 function Servo.Mode7.Stop()
 	Servo.Mode7.ChangeToSpeedMode()
 	Servo.Mode7.SetSpeedAndRun(0)
-end
-
----------------------------------------------------------------------------------------------
---- 设置成模式 7 后，向其他模块注入一些模式 7 下独有的函数。
----------------------------------------------------------------------------------------------
-
-if (Servo.Core == nil) then
-	Servo.Core = {}
-end
-
-if (Servo.EI == nil) then
-	Servo.EI = {}
-end
-
-if (Servo.EO == nil) then
-	Servo.EO = {}
-end
-
-
---- 使能伺服
-function Servo.Core.Enable()
-	if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
-		-- 没有硬件 EI 被配置为使能时才有效
-		Servo.EI.Set(9, true)
-	else
-		print("有硬件 EI 被配置为使能信号，无法将 EI9 配置为使能信号，因此无法使能伺服。")
-	end
-end
-
---- 禁用伺服
-function Servo.Core.Disable()
-	if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
-		-- 没有硬件 EI 被配置为使能时才有效
-		Servo.EI.Set(9, false)
-	else
-		print("有硬件 EI 被配置为使能信号，无法将 EI9 配置为使能信号，因此无法禁用伺服。")
-	end
-end
-
---- 获取 EI 正转信号的值
---- @return boolean
-function Servo.EI.ForwardSignal()
-	return Servo.EI.Get(10)
-end
-
---- 设置 EI 正转信号的值
---- @param value boolean
-function Servo.EI.SetForwardSignal(value)
-	Servo.EI.Set(10, value)
-end
-
---- 获取 EI 反转信号的值
---- @return boolean
-function Servo.EI.ReverseSignal()
-	return Servo.EI.Get(11)
-end
-
---- 设置 EI 反转信号的值
---- @param value boolean
-function Servo.EI.SetReverseSignal(value)
-	Servo.EI.Set(11, value)
-end
-
---- 定位结束（定位完成）信号
---- @return boolean
-function Servo.EO.PositioningCompletedSignal()
-	-- EOUT2 默认的功能代码是 2，即定位完成信号。
-	return Servo.EO.Get(2)
 end
