@@ -2,8 +2,8 @@ if (Detector == nil) then
 	Detector = {}
 end
 
-if (AccelerationDetector == nil) then
-	AccelerationDetector = {}
+if (Detector.AccelerationDetector == nil) then
+	Detector.AccelerationDetector = {}
 end
 
 
