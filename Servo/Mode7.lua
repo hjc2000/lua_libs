@@ -44,10 +44,6 @@ function Servo.Mode7.Config()
 		-- 位置预置
 		Servo.Param.Set(3, 15, 16)
 
-		-- EI16
-		-- 定位取消
-		Servo.Param.Set(3, 16, 32)
-
 		-- EI17
 		-- 通信转速给定值使能
 		Servo.Param.Set(3, 17, 18)
@@ -210,7 +206,7 @@ end
 
 --- 取消定位
 function Servo.Mode7.CancelPositioning()
-	Servo.EI.TriggerRisingEdge(16)
+	AXIS_CANCEL()
 end
 
 --- 停止转动，将速度锁定为 0. 无论原来是什么模式（定位模式、速度模式、转矩模式）都可以使用。
