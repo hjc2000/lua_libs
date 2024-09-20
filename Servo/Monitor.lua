@@ -11,3 +11,9 @@ end
 function Servo.Monitor.CommandTorque()
 	return SRV_MON(2)
 end
+
+--- 读取伺服端子的模拟输入电压
+--- @return number
+function Servo.Monitor.Vref()
+	return SRV_MON(16) / 100
+end
