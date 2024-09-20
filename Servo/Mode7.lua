@@ -47,6 +47,10 @@ function Servo.Mode7.Config()
 		-- EI16
 		-- 定位取消
 		Servo.Param.Set(3, 16, 32)
+
+		-- EI17
+		-- 通信转速给定值使能
+		Servo.Param.Set(3, 17, 18)
 	end
 
 	-- 向其他模块注入一些函数
@@ -118,6 +122,10 @@ function Servo.Mode7.Config()
 
 	-- 配置成模式 7
 	Servo.Param.Set(1, 1, 7)
+
+	-- 通信转速给定值使能设置为 ON，使用通信或脚本来给定轴速度
+	Servo.EI.Set(17, true)
+
 	ConfigEI()
 	Inject()
 end
