@@ -11,7 +11,7 @@ end
 function Servo.Mode7.Config()
 	--- 将 EI 9 配置为使能信号
 	local function ConfigEI()
-		if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
+		if (Servo.EI.WhichHardwareEIConfiguredAs(1) == -1) then
 			-- EI9 配置为使能
 			Servo.Param.Set(3, 9, 1)
 		else
@@ -40,14 +40,13 @@ function Servo.Mode7.Config()
 		-- 定位数据启动
 		Servo.Param.Set(3, 14, 4)
 
-		if (not Servo.EI.ThereIsHardwareEIConfiguredAs_PresetPositionSignal()) then
+		if (Servo.EI.WhichHardwareEIConfiguredAs(16) == -1) then
 			-- EI15
 			-- 位置预置
 			Servo.Param.Set(3, 15, 16)
 		else
 			print("有硬件 EI 被配置为位置预置信号，无法将 EI15 配置为位置预置信号")
 		end
-
 
 		-- EI16
 		-- 通信转速给定值使能
@@ -71,7 +70,7 @@ function Servo.Mode7.Config()
 
 		--- 使能伺服
 		function Servo.Core.Enable()
-			if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
+			if (Servo.EI.WhichHardwareEIConfiguredAs(9) == -1) then
 				-- 没有硬件 EI 被配置为使能时才有效
 				Servo.EI.Set(9, true)
 			else
@@ -81,7 +80,7 @@ function Servo.Mode7.Config()
 
 		--- 禁用伺服
 		function Servo.Core.Disable()
-			if (not Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()) then
+			if (Servo.EI.WhichHardwareEIConfiguredAs(9) == -1) then
 				-- 没有硬件 EI 被配置为使能时才有效
 				Servo.EI.Set(9, false)
 			else
@@ -116,13 +115,20 @@ function Servo.Mode7.Config()
 		--- 通信转速给定值使能状态。
 		--- @return boolean 返回 true 表示使能通信转速给定值，返回 false 表示不使能。
 		function Servo.EI.CommunicationSpeedEnable()
-			return Servo.EI.Get(16)
+			local hardware_ei = Servo.EI.WhichHardwareEIConfiguredAs(16)
+			if (hardware_ei == -1) then
+				return Servo.EI.Get(16)
+			else
+				return Servo.EI.Get(hardware_ei)
+			end
 		end
 
 		--- 设置 通信转速给定值使能状态。
 		--- @param value boolean 设置 true 表示使能通信转速给定值，设置 false 表示不使能。
 		function Servo.EI.SetCommunicationSpeedEnable(value)
-			Servo.EI.Set(16, value)
+			if (Servo.EI.WhichHardwareEIConfiguredAs(16) == -1) then
+				Servo.EI.Set(16, value)
+			end
 		end
 
 		--- 定位结束（定位完成）信号

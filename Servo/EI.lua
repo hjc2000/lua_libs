@@ -34,45 +34,29 @@ function Servo.EI.TriggerRisingEdge(ei_index)
 	Servo.EI.Set(ei_index, false)
 end
 
---#region 检查硬件 EI 是否有特定信号
-
---- 检查是否有硬件 EI 被配置为指定的功能代码
+--- 检查哪个硬件 EI 被配置为指定的功能代码
 --- @param function_code integer
---- @return boolean 有的话返回 true，没有则返回 false.
-function Servo.EI.ThereIsHardwareEIConfiguredAs(function_code)
+--- @return integer 返回被配置为 function_code 的 EI，如果不存在，返回 -1
+function Servo.EI.WhichHardwareEIConfiguredAs(function_code)
 	if (Servo.Param.Get(3, 1) == function_code) then
-		return true
+		return 1
 	end
 
 	if (Servo.Param.Get(3, 2) == function_code) then
-		return true
+		return 2
 	end
 
 	if (Servo.Param.Get(3, 3) == function_code) then
-		return true
+		return 3
 	end
 
 	if (Servo.Param.Get(3, 4) == function_code) then
-		return true
+		return 4
 	end
 
 	if (Servo.Param.Get(3, 5) == function_code) then
-		return true
+		return 5
 	end
 
-	return false
+	return -1
 end
-
---- 是否有硬件 EI 被配置为使能信号，有的话返回 true，没有返回 false。
---- @return boolean
-function Servo.EI.ThereIsHardwareEIConfiguredAs_EnableSignal()
-	return Servo.EI.ThereIsHardwareEIConfiguredAs(1)
-end
-
---- 是否有硬件 EI 被配置为位置预置信号，有的话返回 true，没有返回 false。
---- @return boolean
-function Servo.EI.ThereIsHardwareEIConfiguredAs_PresetPositionSignal()
-	return Servo.EI.ThereIsHardwareEIConfiguredAs(16)
-end
-
---#endregion
