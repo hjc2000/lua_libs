@@ -40,9 +40,14 @@ function Servo.Mode7.Config()
 		-- 定位数据启动
 		Servo.Param.Set(3, 14, 4)
 
-		-- EI15
-		-- 位置预置
-		Servo.Param.Set(3, 15, 16)
+		if (not Servo.EI.ThereIsHardwareEIConfiguredAs_PresetPositionSignal()) then
+			-- EI15
+			-- 位置预置
+			Servo.Param.Set(3, 15, 16)
+		else
+			print("有硬件 EI 被配置为位置预置信号，无法将 EI15 配置为位置预置信号")
+		end
+
 
 		-- EI17
 		-- 通信转速给定值使能
