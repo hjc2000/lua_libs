@@ -49,9 +49,9 @@ function Servo.Mode7.Config()
 		end
 
 
-		-- EI17
+		-- EI16
 		-- 通信转速给定值使能
-		Servo.Param.Set(3, 17, 18)
+		Servo.Param.Set(3, 16, 18)
 	end
 
 	-- 向其他模块注入一些函数
@@ -116,13 +116,13 @@ function Servo.Mode7.Config()
 		--- 通信转速给定值使能状态。
 		--- @return boolean 返回 true 表示使能通信转速给定值，返回 false 表示不使能。
 		function Servo.EI.CommunicationSpeedEnable()
-			return Servo.EI.Get(17)
+			return Servo.EI.Get(16)
 		end
 
 		--- 设置 通信转速给定值使能状态。
 		--- @param value boolean 设置 true 表示使能通信转速给定值，设置 false 表示不使能。
 		function Servo.EI.SetCommunicationSpeedEnable(value)
-			Servo.EI.Set(17, value)
+			Servo.EI.Set(16, value)
 		end
 
 		--- 定位结束（定位完成）信号
