@@ -6,7 +6,8 @@ if (Detector.AccelerationDetector == nil) then
 	Detector.AccelerationDetector = {}
 end
 
-
+require("Servo.Timer")
+require("Servo.Feedback")
 require("Math.InertialElement")
 
 --- 执行检测
