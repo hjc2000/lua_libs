@@ -24,3 +24,17 @@ function Servo.MVariable.Set(index, value)
 		M(index, 0)
 	end
 end
+
+--- 检查指定的 M 变量是否有上升沿事件发生
+--- @param index integer
+--- @return boolean
+function Servo.MVariable.HasRisingEdgeEvent(index)
+	return M_EVENT(index) == 1
+end
+
+--- 检查指定的 M 变量是否有下降沿事件发生
+--- @param index integer
+--- @return boolean
+function Servo.MVariable.HasFallenEdgeEvent(index)
+	return M_EVENT(index) == -1
+end
