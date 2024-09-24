@@ -25,9 +25,11 @@ function Servo.Timer.Period()
 end
 
 --- 设置定时器时间间隔
---- @note 设置本属性仅会改变内部的一个变量的值，没有其他副作用。例如不会将已经启动的定时器的定时周期变更为
---- 新设置的值。本函数主要用于在主循环的定时器启动前，设置定时周期 Servo.Timer.Period()，然后启动定时器，
+--- @note 设置本属性仅会改变内部的一个变量的值，没有其他副作用。例如：不会将已经启动的定时器的定时周期变更为
+--- 新设置的值。
+--- @note 本函数主要用于在主循环的定时器启动前，设置定时周期 Servo.Timer.Period()，然后启动定时器，
 --- 并遵循 Servo.Timer.Period()。
+---
 --- @param value integer
 function Servo.Timer.SetPeriod(value)
 	Servo.Timer._millisecond_period = value
