@@ -3,6 +3,7 @@ if (Servo == nil) then
 end
 
 if (Servo.EI == nil) then
+	--- 管理 EI 端子
 	Servo.EI = {}
 end
 

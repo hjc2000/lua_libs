@@ -3,6 +3,7 @@ if (Servo == nil) then
 end
 
 if (Servo.EO == nil) then
+	--- 管理 EO 端子
 	Servo.EO = {}
 end
 
