@@ -20,14 +20,18 @@ function Inject()
 
 	--- 递增内部时间变量，如果定时时间到，会触发回调。
 	--- @param context {interval:integer, period:integer, callback:function, tick:integer} 上下文
+	---
+	--- @return boolean 定时时间到返回 true，否则返回 false。
+	--- @note 定时时间到后，因为内部计时变量被置为 0 了，所以当前返回 true，但是后续调用时，除非定时时间到了，否则返回 false。
 	function Ticker.Tick(context)
 		context.tick = context.tick + context.interval
 		if (context.tick < context.period) then
-			return
+			return false
 		end
 
 		context.tick = 0
 		context.callback()
+		return true
 	end
 end
 
