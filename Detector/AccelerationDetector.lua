@@ -2,7 +2,7 @@ require("Servo.Timer")
 require("Servo.Feedback")
 require("Math.InertialElement")
 
-function Inject()
+if (true) then
 	if (Detector == nil) then
 		Detector = {}
 	end
@@ -34,5 +34,3 @@ function Inject()
 		return acceleration
 	end
 end
-
-Inject()
