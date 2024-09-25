@@ -39,7 +39,7 @@ if (true) then
 	--- 检查哪个硬件 EI 被配置为指定的功能代码
 	--- @param function_code integer
 	--- @return integer 返回被配置为 function_code 的 EI，如果不存在，返回 -1
-	function Servo.EI.WhichHardwareEIConfiguredAs(function_code)
+	function Servo.EI.WhichHardwareEiIsConfiguredAs(function_code)
 		if (Servo.Param.Get(3, 1) == function_code) then
 			return 1
 		end
