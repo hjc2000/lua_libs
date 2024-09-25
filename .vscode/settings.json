@@ -14,7 +14,8 @@
 		"M_EVENT",
 		"AXIS_MOVEABS",
 		"SRV_EOUT",
-		"AXIS_CANCEL"
+		"AXIS_CANCEL",
+		"G"
 	],
 	"Lua.workspace.library": [
 		"${env:lua_libs}"
