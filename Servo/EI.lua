@@ -35,31 +35,4 @@ if (true) then
 		Servo.Timer.Delay(5)
 		Servo.EI.Set(ei_index, false)
 	end
-
-	--- 检查哪个硬件 EI 被配置为指定的功能代码
-	--- @param function_code integer
-	--- @return integer 返回被配置为 function_code 的 EI，如果不存在，返回 -1
-	function Servo.EI.WhichHardwareEiIsConfiguredAs(function_code)
-		if (Servo.Param.Get(3, 1) == function_code) then
-			return 1
-		end
-
-		if (Servo.Param.Get(3, 2) == function_code) then
-			return 2
-		end
-
-		if (Servo.Param.Get(3, 3) == function_code) then
-			return 3
-		end
-
-		if (Servo.Param.Get(3, 4) == function_code) then
-			return 4
-		end
-
-		if (Servo.Param.Get(3, 5) == function_code) then
-			return 5
-		end
-
-		return -1
-	end
 end
