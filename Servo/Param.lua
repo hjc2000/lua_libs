@@ -83,16 +83,16 @@ if (true) then
 
 	--- 转速限制
 	if true then
-		--- 位置控制和速度控制时的最大转速。单位：rpm
-		--- @return integer
+		--- 位置控制和速度控制时的最大转速。单位：rpm。
+		--- @return number 是浮点数
 		function Servo.Param.SpeedLimit()
-			return Servo.Param.Get(1, 25)
+			return Servo.Param.Get(1, 25) / 100
 		end
 
-		--- 设置位置控制和速度控制时的最大转速。单位：rpm
-		--- @param value integer
+		--- 设置位置控制和速度控制时的最大转速。单位：rpm。
+		--- @param value number 是浮点数
 		function Servo.Param.SetSpeedLimit(value)
-			Servo.Param.Set(1, 25, value, false)
+			Servo.Param.Set(1, 25, math.floor(value * 100), false)
 		end
 	end
 end
