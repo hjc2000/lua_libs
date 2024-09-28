@@ -63,11 +63,20 @@ if (true) then
 		end
 	end
 
+	--- 转速限制
+	if true then
+		--- 位置控制和速度控制时的最大转速。单位：rpm。
+		--- @return number 是浮点数
+		function Servo.Param.SpeedLimit()
+			return Servo.Param.Get(1, 25) / 100
+		end
 
-
-
-
-
+		--- 设置位置控制和速度控制时的最大转速。单位：rpm。
+		--- @param value number 是浮点数
+		function Servo.Param.SetSpeedLimit(value)
+			Servo.Param.Set(1, 25, math.floor(value * 100), false)
+		end
+	end
 
 	--- 伺服旋转一周的指令脉冲数
 	--- @return integer
@@ -81,18 +90,19 @@ if (true) then
 		Servo.Param.Set(1, 5, value, false)
 	end
 
-	--- 转速限制
-	if true then
-		--- 位置控制和速度控制时的最大转速。单位：rpm。
-		--- @return number 是浮点数
-		function Servo.Param.SpeedLimit()
-			return Servo.Param.Get(1, 25) / 100
-		end
-
-		--- 设置位置控制和速度控制时的最大转速。单位：rpm。
-		--- @param value number 是浮点数
-		function Servo.Param.SetSpeedLimit(value)
-			Servo.Param.Set(1, 25, math.floor(value * 100), false)
+	--- 编码器位数
+	--- @return integer 返回编码器的位数。例如 17 位或 20 位。
+	function Servo.Param.EncoderBitCount()
+		if (Servo.Param.Get(2, 99) == 0) then
+			return 20
+		elseif (Servo.Param.Get(2, 99) == 1) then
+			return 17
+		elseif (Servo.Param.Get(2, 99) == 4) then
+			return 20
+		elseif (Servo.Param.Get(2, 99) == 5) then
+			return 17
+		else
+			return 17
 		end
 	end
 end
