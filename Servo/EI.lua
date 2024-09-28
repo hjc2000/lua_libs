@@ -29,10 +29,11 @@ if (true) then
 	--- 让 EI 接收到一个上升沿
 	--- @param ei_index integer EI 索引
 	function Servo.EI.TriggerRisingEdge(ei_index)
+		print("给 EI", ei_index, "信号一个上升沿")
 		Servo.EI.Set(ei_index, false)
-		Servo.Timer.Delay(5)
+		Servo.Timer.Delay(10)
 		Servo.EI.Set(ei_index, true)
-		Servo.Timer.Delay(5)
+		Servo.Timer.Delay(10)
 		Servo.EI.Set(ei_index, false)
 	end
 end
