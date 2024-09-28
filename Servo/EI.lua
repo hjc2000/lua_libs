@@ -31,9 +31,9 @@ if (true) then
 	function Servo.EI.TriggerRisingEdge(ei_index)
 		print("给 EI", ei_index, "信号一个上升沿")
 		Servo.EI.Set(ei_index, false)
-		Servo.Timer.Delay(10)
+		Servo.Timer.Delay(5)
 		Servo.EI.Set(ei_index, true)
-		Servo.Timer.Delay(10)
+		Servo.Timer.Delay(5)
 		Servo.EI.Set(ei_index, false)
 	end
 end
