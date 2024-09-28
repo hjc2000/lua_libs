@@ -22,4 +22,10 @@ if (true) then
 	function Servo.Feedback.Position()
 		return SRV_MON(6)
 	end
+
+	--- 当前的绝对圈数
+	--- @return number
+	function Servo.Feedback.CircleCount()
+		return Servo.Feedback.Position() / Servo.Core.ScriptOneCirclePosition()
+	end
 end
