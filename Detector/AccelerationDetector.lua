@@ -54,8 +54,8 @@ if (true) then
 	function Detector.AccelerationDetector.AccelerationLoad()
 		if (Detector.AccelerationDetector.InertialTorqueIsTheLoad()) then
 			return math.abs(Detector.AccelerationDetector.Acceleration())
+		else
+			return -math.abs(Detector.AccelerationDetector.Acceleration())
 		end
-
-		return 0
 	end
 end
