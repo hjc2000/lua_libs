@@ -33,4 +33,27 @@ if (true) then
 		local acceleration = Math.InertialElement.CurrentOutput(_inertial_element)
 		return acceleration
 	end
+
+	--- 惯性转矩对于电机来说是负载。
+	--- 即电机输出的转矩的绝对值大于匀速时的负载转矩的绝对值，因为此时惯性转矩也作为电机的负载，抵抗
+	--- 电机转动，而不是帮助电机转动。这说明惯性转矩与指令转矩反向。
+	--- @return boolean
+	function Detector.AccelerationDetector.InertialTorqueIsTheLoad()
+		--- 加速度的方向与施加到电机轴上的惯性转矩方向相反，所以加速度方向取反就得到惯性转矩方向。
+		--- 惯性转矩乘上指令转矩，为负数就说明惯性转矩和指令转矩方向相反，此时惯性转矩作为电机的
+		--- 负载，抵抗电机转动。
+		return -Detector.AccelerationDetector.Acceleration() * Servo.Monitor.CommandTorque() < 0
+	end
+
+	--- 惯性转矩与电机指令转矩方向相反时，惯性转矩作为电机的负载，抵抗电机转动。本函数用来量化这种负载，
+	--- 量化的方式就是返回加速度大小。
+	--- 只有在惯性转矩为电机负载时才会返回加速度大小，否则返回 0.
+	--- @return number
+	function Detector.AccelerationDetector.AccelerationLoad()
+		if (Detector.AccelerationDetector.InertialTorqueIsTheLoad()) then
+			return math.abs(Detector.AccelerationDetector.Acceleration())
+		end
+
+		return 0
+	end
 end
