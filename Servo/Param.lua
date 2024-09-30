@@ -40,6 +40,8 @@ if (true) then
 		--- 设置正转转矩限制。单位：额定输出转矩的百分比。
 		--- @param value integer
 		function Servo.Param.SetForwardTorqueLimit(value)
+			value = math.abs(value)
+			value = math.floor(value)
 			Servo.Param.Set(1, 27, value, false)
 		end
 
@@ -52,6 +54,8 @@ if (true) then
 		--- 设置反转转矩限制。单位：额定输出转矩的百分比。
 		--- @param value integer
 		function Servo.Param.SetReverseTorqueLimit(value)
+			value = math.abs(value)
+			value = math.floor(value)
 			Servo.Param.Set(1, 28, value, false)
 		end
 
@@ -74,7 +78,9 @@ if (true) then
 		--- 设置位置控制和速度控制时的最大转速。单位：rpm。
 		--- @param value number 是浮点数
 		function Servo.Param.SetSpeedLimit(value)
-			Servo.Param.Set(1, 25, math.floor(value * 100), false)
+			value = math.abs(value)
+			value = math.floor(value * 100)
+			Servo.Param.Set(1, 25, value, false)
 		end
 	end
 
@@ -87,6 +93,8 @@ if (true) then
 	--- 设置伺服旋转一周的指令脉冲数
 	--- @param value integer
 	function Servo.Param.SetPulseCountPerCircle(value)
+		value = math.abs(value)
+		value = math.floor(value)
 		Servo.Param.Set(1, 5, value, false)
 	end
 
