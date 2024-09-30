@@ -35,19 +35,21 @@ if (true) then
 	end
 
 	--- 惯性转矩对于电机来说是负载。
-	--- 即电机输出的转矩的绝对值大于匀速时的负载转矩的绝对值，因为此时惯性转矩也作为电机的负载，抵抗
-	--- 电机转动，而不是帮助电机转动。这说明惯性转矩与指令转矩反向。
+	--- @note 当惯性转矩方向与电机指令转矩方向相反时，惯性转矩对电机来说是负载。
+	--- 当惯性转矩与电机指令转矩方向相同时，惯性转矩对电机来说时助力。
 	--- @return boolean
 	function Detector.AccelerationDetector.InertialTorqueIsTheLoad()
-		--- 加速度的方向与施加到电机轴上的惯性转矩方向相反，所以加速度方向取反就得到惯性转矩方向。
-		--- 惯性转矩乘上指令转矩，为负数就说明惯性转矩和指令转矩方向相反，此时惯性转矩作为电机的
-		--- 负载，抵抗电机转动。
+		--- 加速度方向与惯性转矩方向相反。所以加速度取相反数，得到的数的符号就与惯性转矩的符号一样。
+		--- 将 -Detector.AccelerationDetector.Acceleration() 与指令转矩相乘，得到的如果是负数，
+		--- 就说明惯性转矩与指令转矩符号相反，则惯性转矩对电机来说是负载。
 		return -Detector.AccelerationDetector.Acceleration() * Servo.Monitor.CommandTorque() < 0
 	end
 
-	--- 惯性转矩与电机指令转矩方向相反时，惯性转矩作为电机的负载，抵抗电机转动。本函数用来量化这种负载，
-	--- 量化的方式就是返回加速度大小。
-	--- 只有在惯性转矩为电机负载时才会返回加速度大小，否则返回 0.
+	--- 惯性转矩与电机指令转矩方向相反时，惯性转矩作为电机的负载，惯性转矩与电机指令转矩方向相同时，惯性转矩作为电机的助力。
+	---
+	--- 本函数用来量化这种负载或助力，量化的方式就是返回据以下规则赋予正负号的加速度大小：
+	--- 1. 当惯性转矩为电机负载时返回正数，因为此时是正负载。
+	--- 2. 当惯性转矩不是电机负载，反而帮助电机转动时，时返回负数，因为此时是负负载，负负得正，于是是助力。
 	--- @return number
 	function Detector.AccelerationDetector.AccelerationLoad()
 		if (Detector.AccelerationDetector.InertialTorqueIsTheLoad()) then
