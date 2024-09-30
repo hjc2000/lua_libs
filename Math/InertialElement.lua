@@ -18,7 +18,6 @@ if (true) then
 		context.T = T
 		context.sample_interval = sample_interval
 		context.resolution = math.abs(resolution)
-
 		context.y = 0
 		context.ky = context.T / (context.T + context.sample_interval)
 		context.kx = context.sample_interval / (context.T + context.sample_interval)
@@ -31,7 +30,6 @@ if (true) then
 	--- @return number 输出值
 	function Math.InertialElement.Input(context, x)
 		context.y = context.ky * context.y + context.kx * x
-
 		if (math.abs(context.y - x) < context.resolution) then
 			context.y = x
 		end
