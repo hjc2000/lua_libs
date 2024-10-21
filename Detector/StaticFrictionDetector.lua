@@ -1,4 +1,5 @@
 require("Detector.AccelerationDetector")
+require("Detector.DynamicFrictionDetector")
 
 --- 静摩擦转矩检测
 if true then
@@ -53,16 +54,8 @@ if true then
 		local right_torque = 0
 		local current_torque = 0
 
-		Servo.ChangeToSpeedMode()
-		Servo.Param.SetBothTorqueLimit(100)
-		Servo.SetSpeedAndRun(100)
-		while (Servo.Feedback.Speed() < 40) do
-			-- 等待直到电机转起来，接近指定速度
-		end
-
-		--- 此时的指令转矩就是动摩擦
-		--- 设置区间右端点为动摩擦 + 10% 的转矩
-		right_torque = Servo.Monitor.CommandTorque() + 10
+		Detector.DynamicFrictionDetector.Detecte()
+		right_torque = Detector.DynamicFrictionDetector.Result() + 10
 		Servo.Stop()
 
 		while true do
