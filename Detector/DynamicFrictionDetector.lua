@@ -36,6 +36,7 @@ if true then
 		local torque_arr = {}
 		for i = 1, 10, 1 do
 			torque_arr[i] = Servo.Monitor.CommandTorque()
+			Servo.Timer.Delay(Servo.Timer.Period())
 		end
 
 		torque_arr = Array.RemoveMinMax(torque_arr)
