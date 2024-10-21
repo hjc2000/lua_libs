@@ -16,7 +16,8 @@
 		"SRV_EOUT",
 		"AXIS_CANCEL",
 		"G",
-		"AXIS_TORQUE"
+		"AXIS_TORQUE",
+		"TIM_VALUE"
 	],
 	"Lua.workspace.library": [
 		"${env:lua_libs}"

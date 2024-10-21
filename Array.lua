@@ -53,6 +53,5 @@ function Array.CalculateAverage(t)
 
 	-- 计算平均值
 	local average = sum / #t
-	average = math.ceil(average)
 	return average
 end

@@ -70,7 +70,6 @@ if (true) then
 		--- 	1. 关闭正转 EI 信号
 		--- 	2. 取消定位
 		function Servo.ChangeToPositionMode()
-			print("切换到定位模式")
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
@@ -83,7 +82,6 @@ if (true) then
 		--- 	1. 关闭正转 EI 信号
 		--- 	2. 取消定位
 		function Servo.ChangeToSpeedMode()
-			print("切换到速度模式")
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
@@ -96,7 +94,6 @@ if (true) then
 		--- 	1. 关闭正转 EI 信号
 		--- 	2. 取消定位
 		function Servo.ChangeToTorqueMode()
-			print("切换到转矩模式")
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
