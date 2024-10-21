@@ -65,6 +65,7 @@ if (true) then
 		--- 	1. 关闭正转 EI 信号
 		--- 	2. 取消定位
 		function Servo.ChangeToPositionMode()
+			print("切换到定位模式")
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
@@ -77,6 +78,7 @@ if (true) then
 		--- 	1. 关闭正转 EI 信号
 		--- 	2. 取消定位
 		function Servo.ChangeToSpeedMode()
+			print("切换到速度模式")
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
@@ -89,6 +91,7 @@ if (true) then
 		--- 	1. 关闭正转 EI 信号
 		--- 	2. 取消定位
 		function Servo.ChangeToTorqueMode()
+			print("切换到转矩模式")
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
@@ -147,6 +150,14 @@ if (true) then
 		--- @param value number
 		function Servo.SetAbsoluteCircleCountAndRun(value)
 			Servo.SetAbsolutePositionAndRun(value * Servo.Feedback.OneCirclePosition())
+		end
+
+		--- 设置绝对转矩并运行
+		--- @param value number
+		function Servo.SetTorqueAndRun(value)
+			AXIS_TORQUE(value)
+			AXIS_SPEED(Servo.Param.SpeedLimitInTorqueMode())
+			Servo.EI.SetForwardSignal(true)
 		end
 
 		--- 通过 EI 进行位置预置，设置零点。

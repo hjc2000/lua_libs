@@ -15,7 +15,8 @@
 		"AXIS_MOVEABS",
 		"SRV_EOUT",
 		"AXIS_CANCEL",
-		"G"
+		"G",
+		"AXIS_TORQUE"
 	],
 	"Lua.workspace.library": [
 		"${env:lua_libs}"
