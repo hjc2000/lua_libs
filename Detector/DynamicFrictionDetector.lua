@@ -6,9 +6,9 @@ if true then
 		Detector = {}
 	end
 
-	if (Detector.DynamicFriction_And_MomentOfInertia_Detector == nil) then
+	if (Detector.DynamicFrictionDetector == nil) then
 		-- 动摩擦和转动惯量检测器
-		Detector.DynamicFriction_And_MomentOfInertia_Detector = {}
+		Detector.DynamicFrictionDetector = {}
 	end
 
 
@@ -21,7 +21,7 @@ if true then
 		local _moment_of_inertia_result = 0
 
 		--- 执行检测
-		function Detector.DynamicFriction_And_MomentOfInertia_Detector.Detecte()
+		function Detector.DynamicFrictionDetector.Detecte()
 			--- 步骤：
 			--- 	* 测量静摩擦，设为 f1。
 			--- 	* 得出等会儿要用的正转转矩 f2 = 4 * f1
@@ -53,13 +53,13 @@ if true then
 
 		--- 动摩擦检测结果
 		--- @return integer
-		function Detector.DynamicFriction_And_MomentOfInertia_Detector.DynamicFrictionResult()
+		function Detector.DynamicFrictionDetector.DynamicFrictionResult()
 			return _dynamic_friction_result
 		end
 
 		--- 转动惯量检测结果
 		--- @return integer
-		function Detector.DynamicFriction_And_MomentOfInertia_Detector.MomentOfInertiaResult()
+		function Detector.DynamicFrictionDetector.MomentOfInertiaResult()
 			return _moment_of_inertia_result
 		end
 	end

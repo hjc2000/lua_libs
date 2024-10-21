@@ -214,12 +214,16 @@ if (true) then
 			Servo.EI.TriggerRisingEdge(11)
 		end
 
-		--- 停止转动。
+		--- 停止转动。会等待直到反馈速度为 0。停止转动的锁轴力为 100%。
 		--- @note 会切换到速度模式，并将速度锁定为 0. 无论原来是什么模式
 		--- （定位模式、速度模式、转矩模式）都可以使用。
 		function Servo.Stop()
 			Servo.ChangeToSpeedMode()
+			Servo.Param.SetBothTorqueLimit(100)
 			Servo.SetSpeedAndRun(0)
+			while (math.abs(Servo.Feedback.Speed()) > 0) do
+				-- 等待直到伺服停止
+			end
 		end
 	end
 

@@ -18,15 +18,6 @@ if true then
 		Servo.SetTorqueAndRun(torque)
 	end
 
-	--- 将转矩限制值放开到 100%，然后将速度设置为 0，让伺服快速停下来，停下来后才能进行下一次的静摩擦检测。
-	local function Stop()
-		Servo.Param.SetBothTorqueLimit(100)
-		Servo.Stop()
-		while (math.abs(Servo.Feedback.Speed()) > 0) do
-			-- 等待直到伺服停止
-		end
-	end
-
 
 
 
@@ -72,10 +63,10 @@ if true then
 		--- 此时的指令转矩就是动摩擦
 		--- 设置区间右端点为动摩擦 + 10% 的转矩
 		right_torque = Servo.Monitor.CommandTorque() + 10
-		Stop()
+		Servo.Stop()
 
 		while true do
-			Stop()
+			Servo.Stop()
 
 			-- 停止后再稍微等一会儿，等充分停止了
 			Servo.Timer.Delay(Detector.StaticFrictionDetector.Delay())
@@ -97,7 +88,7 @@ if true then
 			end
 		end
 
-		Stop()
+		Servo.Stop()
 		return current_torque
 	end
 
