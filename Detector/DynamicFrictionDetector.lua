@@ -24,7 +24,7 @@ if true then
 		while true do
 			Detector.AccelerationDetector.Detect()
 			if (math.abs(Detector.AccelerationDetector.Acceleration()) == 0 and
-					Servo.Feedback.Speed() > 90) then
+					Servo.Feedback.Speed() >= 100) then
 				break
 			end
 
@@ -34,7 +34,7 @@ if true then
 		--- 此时的指令转矩就是动摩擦
 		--- 设置区间右端点为动摩擦 + 10% 的转矩
 		local torque_arr = {}
-		for i = 1, 10, 1 do
+		for i = 1, 20, 1 do
 			torque_arr[i] = Servo.Monitor.CommandTorque()
 			Servo.Timer.Delay(Servo.Timer.Period())
 		end
