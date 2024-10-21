@@ -28,6 +28,30 @@ if true then
 	end
 
 
+
+
+
+	--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
+	if true then
+		--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
+		local _delay = 500
+
+		--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
+		--- @return integer
+		function Detector.StaticFrictionDetector.Delay()
+			return _delay
+		end
+
+		--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
+		--- @param value integer
+		function Detector.StaticFrictionDetector.SetDelay(value)
+			_delay = value
+		end
+	end
+
+
+
+
 	--- 使用二分法，首先指定转矩限制值的区间左右端点，在区间内寻找静摩擦对应的转矩
 	local _detecte_result = 0
 
@@ -42,9 +66,9 @@ if true then
 			current_torque = (left_torque + right_torque) // 2
 
 			RunWithTorque(current_torque)
-			Servo.Timer.Delay(1000)
+			Servo.Timer.Delay(Detector.StaticFrictionDetector.Delay())
 
-			if (Servo.Feedback.Speed() > 10) then
+			if (math.abs(Servo.Feedback.Speed()) > 0) then
 				-- _current_torque 已经让伺服转起来了，说明大于静摩擦
 				right_torque = current_torque - 1
 			else
