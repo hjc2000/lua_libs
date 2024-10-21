@@ -2,38 +2,42 @@ if (true) then
 	--- 配置
 	if true then
 		local function ConfigureEI()
-			-- EI9 配置为使能
+			--- EI9 配置为使能
 			Servo.Param.Set(3, 9, 1)
 
-			-- EI10
-			-- 正转指令
+			--- EI10
+			--- 正转指令
 			Servo.Param.Set(3, 10, 2)
 
-			-- EI11
-			-- 定位取消
+			--- EI11
+			--- 定位取消
 			Servo.Param.Set(3, 11, 32)
 
-			-- EI12
-			-- 控制模式切换
-			-- OFF 是位置控制。ON 后可通过 EI13 进一步选择速度控制和转矩控制。
+			--- EI12
+			--- 控制模式切换
+			--- OFF 是位置控制。ON 后可通过 EI13 进一步选择速度控制和转矩控制。
 			Servo.Param.Set(3, 12, 36)
 
-			-- EI13
-			-- 转矩控制、速度控制切换
-			-- EI12 为 ON 后，EI13 为 OFF 则是速度控制，为 ON 则是转矩控制。
+			--- EI13
+			--- 转矩控制、速度控制切换
+			--- EI12 为 ON 后，EI13 为 OFF 则是速度控制，为 ON 则是转矩控制。
 			Servo.Param.Set(3, 13, 38)
 
-			-- EI14
-			-- 定位数据启动
+			--- EI14
+			--- 定位数据启动
 			Servo.Param.Set(3, 14, 4)
 
-			-- EI15
-			-- 位置预置
+			--- EI15
+			--- 位置预置
 			Servo.Param.Set(3, 15, 16)
 
-			-- EI16
-			-- 通信转速给定值使能
+			--- EI16
+			--- 通信转速给定值使能
 			Servo.Param.Set(3, 16, 18)
+
+			--- EI17
+			--- 通信转矩选择
+			Servo.Param.Set(3, 17, 21)
 		end
 
 		--- 配置成模式 7
@@ -48,6 +52,7 @@ if (true) then
 
 			-- 将通信转速给定值使能 EI 信号设置为 ON，使用通信或脚本来给定转速
 			Servo.EI.SetCommunicationSpeedEnable(true)
+			Servo.EI.SetCommunicationTorqueEnable(true)
 		end
 	end
 
@@ -95,7 +100,7 @@ if (true) then
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
-			Servo.EI.Set(12, true)
+			Servo.EI.Set(12, false)
 			Servo.EI.Set(13, true)
 		end
 	end
@@ -156,7 +161,6 @@ if (true) then
 		--- @param value number
 		function Servo.SetTorqueAndRun(value)
 			AXIS_TORQUE(value)
-			AXIS_SPEED(Servo.Param.SpeedLimitInTorqueMode())
 			Servo.EI.SetForwardSignal(true)
 		end
 
@@ -276,6 +280,18 @@ if (true) then
 		--- @param value boolean 设置 true 表示使能通信转速给定值，设置 false 表示不使能。
 		function Servo.EI.SetCommunicationSpeedEnable(value)
 			Servo.EI.Set(16, value)
+		end
+
+		--- 通信转矩的使能状态
+		--- @return boolean
+		function Servo.EI.CommunicationTorqueEnable()
+			return Servo.EI.Get(17)
+		end
+
+		--- 设置 通信转矩的使能状态
+		--- @param value boolean
+		function Servo.EI.SetCommunicationTorqueEnable(value)
+			Servo.EI.Set(17, value)
 		end
 	end
 
