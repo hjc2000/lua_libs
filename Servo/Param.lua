@@ -67,6 +67,10 @@ if (true) then
 		end
 	end
 
+
+
+
+
 	--- 转速限制
 	if true then
 		--- 位置控制和速度控制时的最大转速。单位：rpm。
@@ -82,7 +86,25 @@ if (true) then
 			value = math.floor(value * 100)
 			Servo.Param.Set(1, 25, value, false)
 		end
+
+		--- 转矩控制时的速度限制值
+		--- @return number
+		function Servo.Param.SpeedLimitInTorqueMode()
+			return Servo.Param.Get(1, 26) / 100
+		end
+
+		--- 设置转矩控制时的速度限制值
+		--- @param value any
+		function Servo.Param.SetSpeedLimitInTorqueMode(value)
+			value = math.abs(value)
+			value = math.floor(value * 100)
+			Servo.Param.Set(1, 26, value, false)
+		end
 	end
+
+
+
+
 
 	--- 伺服旋转一周的指令脉冲数
 	--- @return integer
