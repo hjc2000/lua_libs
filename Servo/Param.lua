@@ -94,7 +94,7 @@ if (true) then
 		end
 
 		--- 设置转矩控制时的速度限制值
-		--- @param value any
+		--- @param value number
 		function Servo.Param.SetSpeedLimitInTorqueMode(value)
 			value = math.abs(value)
 			value = math.floor(value * 100)
