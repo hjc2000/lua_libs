@@ -13,16 +13,16 @@ if true then
 	--- 在速度模式下以指定的转矩限制值转动
 	--- @param torque integer 转矩限制值
 	local function RunWithTorque(torque)
-		Servo.ChangeToSpeedMode()
-		Servo.Param.SetBothTorqueLimit(torque)
-		Servo.SetSpeedAndRun(100)
+		Servo.ChangeToTorqueMode()
+		Servo.Param.SetSpeedLimitInTorqueMode(100)
+		Servo.SetTorqueAndRun(torque)
 	end
 
 	--- 将转矩限制值放开到 100%，然后将速度设置为 0，让伺服快速停下来，停下来后才能进行下一次的静摩擦检测。
 	local function Stop()
 		Servo.Param.SetBothTorqueLimit(100)
 		Servo.Stop()
-		while math.abs(Servo.Feedback.Speed()) > 5 do
+		while (math.abs(Servo.Feedback.Speed()) > 0) do
 			-- 等待直到伺服停止
 		end
 	end
@@ -59,21 +59,37 @@ if true then
 	--- @return integer
 	local function DetecteOnce()
 		local left_torque = 0
-		local right_torque = 100
+		local right_torque = 0
 		local current_torque = 0
 
+		Servo.ChangeToSpeedMode()
+		Servo.Param.SetBothTorqueLimit(100)
+		Servo.SetSpeedAndRun(100)
+		while (Servo.Feedback.Speed() < 40) do
+			-- 等待直到电机转起来，接近指定速度
+		end
+
+		--- 此时的指令转矩就是动摩擦
+		--- 设置区间右端点为动摩擦 + 10% 的转矩
+		right_torque = Servo.Monitor.CommandTorque() + 10
+		Stop()
+
 		while true do
-			current_torque = (left_torque + right_torque) // 2
+			Stop()
+
+			-- 停止后再稍微等一会儿，等充分停止了
+			Servo.Timer.Delay(Detector.StaticFrictionDetector.Delay())
+			current_torque = (left_torque + right_torque) / 2
 
 			RunWithTorque(current_torque)
 			Servo.Timer.Delay(Detector.StaticFrictionDetector.Delay())
 
 			if (math.abs(Servo.Feedback.Speed()) > 0) then
 				-- _current_torque 已经让伺服转起来了，说明大于静摩擦
-				right_torque = current_torque - 1
+				right_torque = current_torque - 0.1
 			else
 				-- 没让伺服转起来，说明 _current_torque 无法克服静摩擦
-				left_torque = current_torque + 1
+				left_torque = current_torque + 0.1
 			end
 
 			if (left_torque >= right_torque) then
