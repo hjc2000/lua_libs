@@ -34,9 +34,9 @@ if true then
 		--- 此时的指令转矩就是动摩擦
 		--- 设置区间右端点为动摩擦 + 10% 的转矩
 		local torque_arr = {}
-		for i = 1, 20, 1 do
+		for i = 1, 10, 1 do
 			torque_arr[i] = Servo.Monitor.CommandTorque()
-			Servo.Timer.Delay(Servo.Timer.Period())
+			Servo.Timer.Delay(100)
 		end
 
 		torque_arr = Array.RemoveMinMax(torque_arr)
