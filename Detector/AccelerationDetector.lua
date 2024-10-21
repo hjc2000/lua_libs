@@ -1,6 +1,7 @@
-require("Servo.Timer")
-require("Servo.Feedback")
 require("Math.InertialElement")
+require("Servo.Monitor")
+require("Servo.Feedback")
+require("Servo.Timer")
 
 if (true) then
 	if (Detector == nil) then

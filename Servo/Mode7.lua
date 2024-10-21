@@ -1,7 +1,3 @@
-require("Servo.Core")
-require("Servo.EI")
-require("Servo.EO")
-
 if (true) then
 	--- 配置
 	if true then

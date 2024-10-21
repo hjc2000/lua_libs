@@ -1,7 +1,13 @@
+require("Detector.AccelerationDetector")
+
 --- 静摩擦转矩检测
 if true then
-	if (StaticFrictionDetector == nil) then
-		StaticFrictionDetector = {}
+	if (Detector == nil) then
+		Detector = {}
+	end
+
+	if (Detector.StaticFrictionDetector == nil) then
+		Detector.StaticFrictionDetector = {}
 	end
 
 	--- 在速度模式下以指定的转矩限制值转动
@@ -53,9 +59,9 @@ if true then
 	end
 
 	--- 执行检测
-	function StaticFrictionDetector.Detecte()
+	function Detector.StaticFrictionDetector.Detecte()
 		local torque_arr = {}
-		for i = 1, 10, 1 do
+		for i = 1, 4, 1 do
 			torque_arr[i] = DetecteOnce()
 		end
 
@@ -66,7 +72,7 @@ if true then
 
 	--- 检测结果
 	--- @return integer
-	function StaticFrictionDetector.Result()
+	function Detector.StaticFrictionDetector.Result()
 		return _detecte_result
 	end
 end
