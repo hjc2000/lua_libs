@@ -36,12 +36,10 @@ if true then
 	local function DetecteOnce()
 		local left_torque = 0
 		local right_torque = 100
+		local current_torque = 0
 
 		while true do
-			local current_torque = (left_torque + right_torque) // 2
-			if (left_torque >= right_torque) then
-				return current_torque
-			end
+			current_torque = (left_torque + right_torque) // 2
 
 			RunWithTorque(current_torque)
 			Servo.Timer.Delay(1000)
@@ -54,8 +52,13 @@ if true then
 				left_torque = current_torque + 1
 			end
 
-			Stop()
+			if (left_torque >= right_torque) then
+				break
+			end
 		end
+
+		Stop()
+		return current_torque
 	end
 
 	--- 执行检测
