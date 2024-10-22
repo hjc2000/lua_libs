@@ -24,7 +24,7 @@ if true then
 
 		Detector.AccelerationDetector.Reset()
 
-		--- 等待直到电机转起来，达到指定速度
+		--- 等待直到电机转起来，达到指定速度，并且加速度为 0，即速度保持稳定。
 		--- 计数，至少让加速度检测器检测到 100 个点
 		local count = 0
 		while true do
