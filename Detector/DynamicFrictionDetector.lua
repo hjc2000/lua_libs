@@ -24,14 +24,19 @@ if true then
 
 		-- 等待直到电机转起来，达到指定速度
 		Detector.AccelerationDetector.Reset()
+
+		--- 计数，至少让加速度检测器检测到 100 个点
+		local count = 0
 		while true do
 			Detector.AccelerationDetector.Detect()
 			if (math.abs(Detector.AccelerationDetector.Acceleration()) == 0 and
-					Servo.Feedback.Speed() >= 100) then
+					Servo.Feedback.Speed() >= 100 and
+					count > 100) then
 				break
 			end
 
 			Servo.Timer.Delay(Servo.Timer.Period())
+			count = count + 1
 		end
 
 		--- 此时的指令转矩就是动摩擦
