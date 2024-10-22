@@ -23,6 +23,7 @@ if true then
 		Servo.SetSpeedAndRun(100)
 
 		-- 等待直到电机转起来，接近指定速度
+		Detector.AccelerationDetector.Reset()
 		while true do
 			Detector.AccelerationDetector.Detect()
 			if (math.abs(Detector.AccelerationDetector.Acceleration()) == 0 and
@@ -34,9 +35,13 @@ if true then
 		end
 
 		--- 此时的指令转矩就是动摩擦
-		local inertial_element = Math.InertialElement.New(0.1, Servo.Timer.Period() / 1000, 0.1)
+		--- 将惯性时间常数设定为采样周期的 10 倍
+		local inertial_element = Math.InertialElement.New(Servo.Timer.Period() / 1000 * 10,
+			Servo.Timer.Period() / 1000,
+			0.1)
 
-		for i = 0, 100, 1 do
+		-- 采样 100 个点
+		for i = 0, 99, 1 do
 			Math.InertialElement.Input(inertial_element, Servo.Monitor.CommandTorque())
 			Servo.Timer.Delay(Servo.Timer.Period())
 		end
