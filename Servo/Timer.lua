@@ -16,13 +16,13 @@ if (true) then
 	end
 
 	--- Servo.Timer.Period() 属性内部变量
-	Servo.Timer._millisecond_period = 10
+	local _millisecond_period = 10
 
 	--- 定时周期。单位：ms
 	--- 主循环中使用定时器需要遵守本属性，将周期设为本属性。
 	--- @return integer
 	function Servo.Timer.Period()
-		return Servo.Timer._millisecond_period
+		return _millisecond_period
 	end
 
 	--- 设置定时器时间间隔
@@ -33,6 +33,6 @@ if (true) then
 	---
 	--- @param value integer
 	function Servo.Timer.SetPeriod(value)
-		Servo.Timer._millisecond_period = value
+		_millisecond_period = value
 	end
 end
