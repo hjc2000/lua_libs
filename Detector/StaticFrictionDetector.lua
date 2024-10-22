@@ -88,7 +88,7 @@ if true then
 	--- 执行检测
 	function Detector.StaticFrictionDetector.Detecte()
 		local torque_arr = {}
-		for i = 1, 4, 1 do
+		for i = 0, 3, 1 do
 			torque_arr[i] = DetecteOnce()
 		end
 

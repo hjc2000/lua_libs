@@ -9,7 +9,7 @@ if (true) then
 
 	--- 创建一个惯性环节
 	--- @param T number 惯性时间常数
-	--- @param sample_interval number 采样周期
+	--- @param sample_interval number 采样周期。单位：秒。
 	--- @param resolution number 分辨率。当前输出离输入差距小于多少时，就直接将输出值赋值为输入，
 	--- 避免迟迟不收敛甚至到最后超出浮点精度。
 	--- @return {T:number, sample_interval:number, resolution:number, y:number, ky:number, kx:number} 上下文

@@ -1,3 +1,5 @@
+require("Math.InertialElement")
+
 -- 动摩擦和转动惯量检测器
 if true then
 	if (Detector == nil) then
@@ -32,15 +34,14 @@ if true then
 		end
 
 		--- 此时的指令转矩就是动摩擦
-		--- 设置区间右端点为动摩擦 + 10% 的转矩
-		local torque_arr = {}
-		for i = 1, 10, 1 do
-			torque_arr[i] = Servo.Monitor.CommandTorque()
-			Servo.Timer.Delay(100)
+		local inertial_element = Math.InertialElement.New(0.1, Servo.Timer.Period() / 1000, 0.1)
+
+		for i = 0, 100, 1 do
+			Math.InertialElement.Input(inertial_element, Servo.Monitor.CommandTorque())
+			Servo.Timer.Delay(Servo.Timer.Period())
 		end
 
-		torque_arr = Array.RemoveMinMax(torque_arr)
-		_dynamic_friction_result = Array.CalculateAverage(torque_arr)
+		_dynamic_friction_result = Math.InertialElement.CurrentOutput(inertial_element)
 		print("检测到动摩擦为：", _dynamic_friction_result)
 		Servo.Stop()
 	end

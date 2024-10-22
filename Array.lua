@@ -60,8 +60,9 @@ function Array.RemoveMinMax(t)
 	-- 删除最大值和最小值
 	Array.RemoveAt(t, max_index)
 
-	-- 注意：删除最大值后，最小值的索引可能发生变化
 	if (min_index > max_index) then
+		--- 如果 min_index 大于 max_index，移除最大值后，所有元素向前移动 1 格，会导致原本 min_index
+		--- 指向的元素向前移动一格，所以需要减 1
 		min_index = min_index - 1
 	end
 

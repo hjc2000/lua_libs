@@ -14,7 +14,7 @@ if (true) then
 
 	--- Servo.Timer.Period() 默认值是 10ms，10 / 100 = 0.1 加速度小于 0.1，
 	--- 也就是 10ms 内速度差小于 1rpm，就认为加速度达到 0 了。
-	local _inertial_element = Math.InertialElement.New(0.05, 0.010, 0.1)
+	local _inertial_element = Math.InertialElement.New(0.05, Servo.Timer.Period() / 1000, 0.1)
 	local _current_feedback_speed = 0
 	local _last_feedback_speed = 0
 
