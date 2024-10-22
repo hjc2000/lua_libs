@@ -39,11 +39,11 @@ if true then
 			count = count + 1
 		end
 
+		local sample_interval = Servo.Timer.Period() / 1000
+
 		--- 此时的指令转矩就是动摩擦
 		--- 将惯性时间常数设定为采样周期的 10 倍
-		local inertial_element = Math.InertialElement.New(Servo.Timer.Period() / 1000 * 10,
-			Servo.Timer.Period() / 1000,
-			0.1)
+		local inertial_element = Math.InertialElement.New(sample_interval * 10, sample_interval, 0.1)
 
 		-- 采样 100 个点
 		for i = 0, 99, 1 do

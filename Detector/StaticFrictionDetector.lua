@@ -62,7 +62,7 @@ if true then
 			Servo.Stop()
 
 			-- 停止后再稍微等一会儿，等充分停止了
-			Servo.Timer.Delay(100)
+			Servo.Timer.Delay(1000)
 
 			-- 开始二分法
 			current_torque = (left_torque + right_torque) / 2

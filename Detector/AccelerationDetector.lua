@@ -12,18 +12,18 @@ if (true) then
 		Detector.AccelerationDetector = {}
 	end
 
+	local _sample_interval = Servo.Timer.Period() / 1000
+
 	--- Servo.Timer.Period() 默认值是 10ms，10 / 100 = 0.1 加速度小于 0.1，
 	--- 也就是 10ms 内速度差小于 1rpm，就认为加速度达到 0 了。
 	--- 将惯性时间常数设定为采样周期的 10 倍
-	local _inertial_element = Math.InertialElement.New(Servo.Timer.Period() / 1000 * 10, Servo.Timer.Period() / 1000, 0.1)
+	local _inertial_element = Math.InertialElement.New(_sample_interval * 10, _sample_interval, 0.1)
 	local _current_feedback_speed = 0
 	local _last_feedback_speed = 0
 
 	--- 重置加速度检测器
 	function Detector.AccelerationDetector.Reset()
-		_inertial_element = Math.InertialElement.New(Servo.Timer.Period() / 1000 * 10,
-			Servo.Timer.Period() / 1000,
-			0.1)
+		_inertial_element = Math.InertialElement.New(_sample_interval * 10, _sample_interval, 0.1)
 
 		_current_feedback_speed = 0
 		_last_feedback_speed = 0
