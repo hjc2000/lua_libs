@@ -22,9 +22,9 @@ if true then
 		Servo.Param.SetBothTorqueLimit(100)
 		Servo.SetSpeedAndRun(100)
 
-		-- 等待直到电机转起来，达到指定速度
 		Detector.AccelerationDetector.Reset()
 
+		--- 等待直到电机转起来，达到指定速度
 		--- 计数，至少让加速度检测器检测到 100 个点
 		local count = 0
 		while true do
