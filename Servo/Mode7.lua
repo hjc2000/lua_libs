@@ -118,7 +118,7 @@ if (true) then
 				Servo.EI.SetForwardSignal(false)
 			end
 
-			Servo.Param.SetSpeedLimit(value)
+			Servo.Param.SetSpeedLimit(math.abs(value))
 			AXIS_SPEED(value)
 			Servo.EI.SetForwardSignal(true)
 		end
