@@ -26,7 +26,7 @@ if true then
 	--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
 	if true then
 		--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
-		local _delay = 1000
+		local _delay = 500
 
 		--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
 		--- @return integer
@@ -62,9 +62,10 @@ if true then
 			Servo.Stop()
 
 			-- 停止后再稍微等一会儿，等充分停止了
-			Servo.Timer.Delay(Detector.StaticFrictionDetector.Delay())
-			current_torque = (left_torque + right_torque) / 2
+			Servo.Timer.Delay(100)
 
+			-- 开始二分法
+			current_torque = (left_torque + right_torque) / 2
 			RunWithTorque(current_torque)
 			Servo.Timer.Delay(Detector.StaticFrictionDetector.Delay())
 
@@ -88,7 +89,7 @@ if true then
 	--- 执行检测
 	function Detector.StaticFrictionDetector.Detecte()
 		local torque_arr = {}
-		for i = 0, 3, 1 do
+		for i = 0, 9, 1 do
 			torque_arr[i] = DetecteOnce()
 		end
 
