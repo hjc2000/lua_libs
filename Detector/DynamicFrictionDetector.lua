@@ -21,7 +21,7 @@ if true then
 	function Detector.DynamicFrictionDetector.Detecte()
 		-- 记录当前位置，检测完毕后要回到此位置
 		local position = Servo.Feedback.Position()
-		local speed = 50
+		local speed = 30
 		Servo.ChangeToSpeedMode()
 		Servo.Param.SetBothTorqueLimit(100)
 		Servo.SetSpeedAndRun(speed)
@@ -49,8 +49,8 @@ if true then
 		--- 将惯性时间常数设定为采样周期的 10 倍
 		local inertial_element = Math.InertialElement.New(sample_interval * 10, sample_interval, 0.1)
 
-		-- 采样 100 个点
-		for i = 0, 99, 1 do
+		-- 采样 400 个点
+		for i = 0, 400 - 1, 1 do
 			Math.InertialElement.Input(inertial_element, Servo.Monitor.CommandTorque())
 			Servo.Timer.Delay(Servo.Timer.Period())
 		end
