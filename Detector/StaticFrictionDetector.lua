@@ -105,6 +105,7 @@ if true then
 	end
 
 	--- 执行检测
+	--- 检测完后会回到原位
 	function Detector.StaticFrictionDetector.Detecte()
 		-- 记录当前位置，检测完毕后要回到此位置
 		local position = Servo.Feedback.Position()
