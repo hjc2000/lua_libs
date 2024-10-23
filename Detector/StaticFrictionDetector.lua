@@ -110,7 +110,7 @@ if true then
 		local position = Servo.Feedback.Position()
 
 		local torque_arr = {}
-		for i = 0, 4, 1 do
+		for i = 0, 3, 1 do
 			torque_arr[i] = DetecteOnce()
 		end
 
