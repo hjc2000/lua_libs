@@ -59,10 +59,8 @@ if true then
 		Servo.Stop()
 
 		while true do
-			Servo.Stop()
-
-			-- 停止后再稍微等一会儿，等充分停止了
-			Servo.Timer.Delay(500)
+			-- 记录当前位置，检测完毕后要回到此位置
+			local position = Servo.Feedback.Position()
 
 			-- 开始二分法
 			current_torque = (left_torque + right_torque) / 2
@@ -80,6 +78,26 @@ if true then
 			if (left_torque >= right_torque) then
 				break
 			end
+
+			-- 检测完毕，回到原位
+			if true then
+				Servo.ChangeToPositionMode()
+				Servo.Param.SetBothTorqueLimit(100)
+				Servo.Param.SetSpeedLimit(100)
+				Servo.SetAbsolutePositionAndRun(position)
+
+				-- 等待定位结束
+				while true do
+					if (Servo.EO.PositioningCompletedSignal()) then
+						break
+					end
+				end
+			end
+
+			Servo.Stop()
+
+			-- 停止后再稍微等一会儿，等充分停止了
+			Servo.Timer.Delay(500)
 		end
 
 		Servo.Stop()
@@ -88,14 +106,34 @@ if true then
 
 	--- 执行检测
 	function Detector.StaticFrictionDetector.Detecte()
+		-- 记录当前位置，检测完毕后要回到此位置
+		local position = Servo.Feedback.Position()
+
 		local torque_arr = {}
-		for i = 0, 9, 1 do
+		for i = 0, 4, 1 do
 			torque_arr[i] = DetecteOnce()
 		end
 
 		torque_arr = Array.RemoveMinMax(torque_arr)
 		_detecte_result = Array.CalculateAverage(torque_arr)
 		print("检测结束，静摩擦： ", _detecte_result)
+
+		-- 检测完毕，回到原位
+		if true then
+			Servo.ChangeToPositionMode()
+			Servo.Param.SetBothTorqueLimit(100)
+			Servo.Param.SetSpeedLimit(100)
+			Servo.SetAbsolutePositionAndRun(position)
+
+			-- 等待定位结束
+			while true do
+				if (Servo.EO.PositioningCompletedSignal()) then
+					break
+				end
+			end
+		end
+
+		Servo.Stop()
 	end
 
 	--- 检测结果

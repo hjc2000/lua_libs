@@ -17,10 +17,14 @@ if true then
 	local _dynamic_friction_result = 0
 
 	--- 执行检测
+	--- 检测完毕后会回到原来的位置
 	function Detector.DynamicFrictionDetector.Detecte()
+		-- 记录当前位置，检测完毕后要回到此位置
+		local position = Servo.Feedback.Position()
+		local speed = 100
 		Servo.ChangeToSpeedMode()
 		Servo.Param.SetBothTorqueLimit(100)
-		Servo.SetSpeedAndRun(100)
+		Servo.SetSpeedAndRun(speed)
 
 		Detector.AccelerationDetector.Reset()
 
@@ -30,7 +34,7 @@ if true then
 		while true do
 			Detector.AccelerationDetector.Detect()
 			if (math.abs(Detector.AccelerationDetector.Acceleration()) == 0 and
-					Servo.Feedback.Speed() >= 100 and
+					Servo.Feedback.Speed() >= speed and
 					count > 100) then
 				break
 			end
@@ -53,6 +57,22 @@ if true then
 
 		_dynamic_friction_result = Math.InertialElement.CurrentOutput(inertial_element)
 		print("检测到动摩擦为：", _dynamic_friction_result)
+
+		-- 检测完毕，回到原位
+		if true then
+			Servo.ChangeToPositionMode()
+			Servo.Param.SetBothTorqueLimit(100)
+			Servo.Param.SetSpeedLimit(100)
+			Servo.SetAbsolutePositionAndRun(position)
+
+			-- 等待定位结束
+			while true do
+				if (Servo.EO.PositioningCompletedSignal()) then
+					break
+				end
+			end
+		end
+
 		Servo.Stop()
 	end
 
