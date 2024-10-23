@@ -21,7 +21,7 @@ if true then
 	function Detector.DynamicFrictionDetector.Detecte()
 		-- 记录当前位置，检测完毕后要回到此位置
 		local position = Servo.Feedback.Position()
-		local speed = 100
+		local speed = 50
 		Servo.ChangeToSpeedMode()
 		Servo.Param.SetBothTorqueLimit(100)
 		Servo.SetSpeedAndRun(speed)
