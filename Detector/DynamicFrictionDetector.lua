@@ -18,7 +18,7 @@ if true then
 
 	--- 执行检测
 	--- 检测完毕后会回到原来的位置
-	function Detector.DynamicFrictionDetector.Detecte()
+	function Detector.DynamicFrictionDetector.Detect()
 		-- 记录当前位置，检测完毕后要回到此位置
 		local position = Servo.Feedback.Position()
 		local speed = 30

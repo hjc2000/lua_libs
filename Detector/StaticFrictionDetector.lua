@@ -68,7 +68,7 @@ if true then
 		local right_torque = 0
 		local current_torque = 0
 
-		Detector.DynamicFrictionDetector.Detecte()
+		Detector.DynamicFrictionDetector.Detect()
 		right_torque = Detector.DynamicFrictionDetector.Result() + 10
 		Servo.Stop()
 
@@ -106,7 +106,7 @@ if true then
 
 	--- 执行检测
 	--- 检测完后会回到原位
-	function Detector.StaticFrictionDetector.Detecte()
+	function Detector.StaticFrictionDetector.Detect()
 		-- 记录当前位置，检测完毕后要回到此位置
 		local position = Servo.Feedback.Position()
 
