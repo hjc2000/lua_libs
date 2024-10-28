@@ -11,16 +11,30 @@ if true then
 		Detector.StaticFrictionDetector = {}
 	end
 
-	--- 在速度模式下以指定的转矩限制值转动
+	--- 切换到转矩模式，速度限制 50，以指定的转矩转动。
 	--- @param torque integer 转矩限制值
 	local function RunWithTorque(torque)
 		Servo.ChangeToTorqueMode()
-		Servo.Param.SetSpeedLimitInTorqueMode(100)
+		Servo.Param.SetSpeedLimitInTorqueMode(50)
 		Servo.SetTorqueAndRun(torque)
 	end
 
+	--- 检测完毕，回到原位。
+	--- 每次动作前，记录当前位置，完成后用此函数回到原始位置。
+	--- @param origin_position integer 原始位置
+	local function ReturnToOriginPosition(origin_position)
+		Servo.ChangeToPositionMode()
+		Servo.Param.SetBothTorqueLimit(100)
+		Servo.Param.SetSpeedLimit(100)
+		Servo.SetAbsolutePositionAndRun(origin_position)
 
-
+		-- 等待定位结束
+		while true do
+			if (Servo.EO.PositioningCompletedSignal()) then
+				break
+			end
+		end
+	end
 
 
 	--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
@@ -79,21 +93,7 @@ if true then
 				break
 			end
 
-			-- 检测完毕，回到原位
-			if true then
-				Servo.ChangeToPositionMode()
-				Servo.Param.SetBothTorqueLimit(100)
-				Servo.Param.SetSpeedLimit(100)
-				Servo.SetAbsolutePositionAndRun(position)
-
-				-- 等待定位结束
-				while true do
-					if (Servo.EO.PositioningCompletedSignal()) then
-						break
-					end
-				end
-			end
-
+			ReturnToOriginPosition(position)
 			Servo.Stop()
 
 			-- 停止后再稍微等一会儿，等充分停止了
@@ -119,21 +119,7 @@ if true then
 		_detecte_result = Array.CalculateAverage(torque_arr)
 		print("检测结束，静摩擦： ", _detecte_result)
 
-		-- 检测完毕，回到原位
-		if true then
-			Servo.ChangeToPositionMode()
-			Servo.Param.SetBothTorqueLimit(100)
-			Servo.Param.SetSpeedLimit(100)
-			Servo.SetAbsolutePositionAndRun(position)
-
-			-- 等待定位结束
-			while true do
-				if (Servo.EO.PositioningCompletedSignal()) then
-					break
-				end
-			end
-		end
-
+		ReturnToOriginPosition(position)
 		Servo.Stop()
 	end
 
