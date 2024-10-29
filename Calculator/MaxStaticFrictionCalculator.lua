@@ -15,6 +15,7 @@ if true then
 		local context = {}
 		context.f_max = f_max
 		context.mu = mu
+		return context
 	end
 
 	--- 计算当前的最大摩擦力。
