@@ -28,10 +28,6 @@ if (true) then
 	--- @return integer
 	function Servo.Feedback.Position()
 		local position = SRV_MON(6)
-		if (Servo.Param.Get(1, 4) == 1) then
-			position = -position
-		end
-
 		return position
 	end
 
