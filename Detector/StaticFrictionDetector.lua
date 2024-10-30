@@ -15,7 +15,7 @@ if true then
 	--- @param torque integer 转矩限制值
 	local function RunWithTorque(torque)
 		Servo.ChangeToTorqueMode()
-		Servo.Param.SetSpeedLimitInTorqueMode(100)
+		Servo.Param.SetSpeedLimitInTorqueMode(50)
 		Servo.SetTorqueAndRun(torque)
 	end
 
@@ -69,8 +69,16 @@ if true then
 		local current_torque = 0
 
 		Detector.DynamicFrictionDetector.Detect()
-		right_torque = Detector.DynamicFrictionDetector.Result() + 10
+		right_torque = Detector.DynamicFrictionDetector.Result() + 50
+		if (right_torque > 100) then
+			print("right_torque 超过100，为：", right_torque, "现限幅到100")
+			right_torque = 100
+		end
+
 		Servo.Stop()
+
+		-- 停止后再稍微等一会儿，等充分停止了
+		Servo.Timer.Delay(1000)
 
 		while true do
 			-- 记录当前位置，检测完毕后要回到此位置
@@ -97,7 +105,7 @@ if true then
 			Servo.Stop()
 
 			-- 停止后再稍微等一会儿，等充分停止了
-			Servo.Timer.Delay(500)
+			Servo.Timer.Delay(1000)
 		end
 
 		Servo.Stop()
