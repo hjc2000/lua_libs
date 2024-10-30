@@ -15,7 +15,7 @@ if true then
 	--- @param torque integer 转矩限制值
 	local function RunWithTorque(torque)
 		Servo.ChangeToTorqueMode()
-		Servo.Param.SetSpeedLimitInTorqueMode(50)
+		Servo.Param.SetSpeedLimitInTorqueMode(100)
 		Servo.SetTorqueAndRun(torque)
 	end
 
@@ -40,7 +40,7 @@ if true then
 	--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
 	if true then
 		--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
-		local _delay = 500
+		local _delay = 1000
 
 		--- 设置完速度指令后，要等待多少毫秒的延时之后才开始检测电机速度
 		--- @return integer

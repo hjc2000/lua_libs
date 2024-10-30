@@ -10,7 +10,14 @@ if (true) then
 	--- 反馈速度。有正负。单位：rpm
 	--- @return integer
 	function Servo.Feedback.Speed()
-		return SRV_MON(0)
+		local speed = SRV_MON(0)
+		if (Servo.Param.Get(1, 4) == 1) then
+			--- 运行方向如果设置为反向，监控数据中读取到的反馈速度并不会自动反向，
+			--- 需要脚本取相反数，从而将参考正方向切换到反向。
+			speed = -speed
+		end
+
+		return speed
 	end
 
 	--- 反馈位置。能被位置预置清 0。此外还受参数中设置的 “编码器旋转一圈的脉冲数” 影响。
