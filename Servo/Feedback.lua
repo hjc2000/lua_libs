@@ -27,7 +27,12 @@ if (true) then
 	---
 	--- @return integer
 	function Servo.Feedback.Position()
-		return SRV_MON(6)
+		local position = SRV_MON(6)
+		if (Servo.Param.Get(1, 4) == 1) then
+			position = -position
+		end
+
+		return position
 	end
 
 	--- 脚本中要让电机转一圈，AXIS_MOVEABS 函数的参数要传入多少。
