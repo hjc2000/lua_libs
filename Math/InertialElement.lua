@@ -12,7 +12,7 @@ if (true) then
 	--- @param sample_interval number 采样周期。单位：秒。
 	--- @param resolution number 分辨率。当前输出离输入差距小于多少时，就直接将输出值赋值为输入，
 	--- 避免迟迟不收敛甚至到最后超出浮点精度。
-	--- @return {T:number, sample_interval:number, resolution:number, y:number, ky:number, kx:number} 上下文
+	--- @return table 上下文
 	function Math.InertialElement.New(T, sample_interval, resolution)
 		local context = {}
 		context.T = T
@@ -25,7 +25,7 @@ if (true) then
 	end
 
 	--- 输入一个值并获取输出。
-	--- @param context {T:number, sample_interval:number, resolution:number, y:number, ky:number, kx:number} 上下文
+	--- @param context table 上下文
 	--- @param x number 输入值
 	--- @return number 输出值
 	function Math.InertialElement.Input(context, x)
@@ -38,9 +38,22 @@ if (true) then
 	end
 
 	--- 获取惯性环节当前输出
-	--- @param context {T:number, sample_interval:number, resolution:number, y:number, ky:number, kx:number} 上下文
+	--- @param context table 上下文
 	--- @return number
 	function Math.InertialElement.CurrentOutput(context)
 		return context.y
+	end
+
+	--- 更改滤波器的参数
+	--- @param context table
+	--- @param T number
+	--- @param sample_interval number
+	--- @param resolution number
+	function Math.InertialElement.ChangeParameter(context, T, sample_interval, resolution)
+		context.T = T
+		context.sample_interval = sample_interval
+		context.resolution = math.abs(resolution)
+		context.ky = context.T / (context.T + context.sample_interval)
+		context.kx = context.sample_interval / (context.T + context.sample_interval)
 	end
 end
