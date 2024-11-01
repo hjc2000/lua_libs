@@ -18,6 +18,7 @@ if (true) then
 		context.T = T
 		context.sample_interval = sample_interval
 		context.resolution = math.abs(resolution)
+
 		context.y = 0
 		context.ky = context.T / (context.T + context.sample_interval)
 		context.kx = context.sample_interval / (context.T + context.sample_interval)
@@ -53,6 +54,7 @@ if (true) then
 		context.T = T
 		context.sample_interval = sample_interval
 		context.resolution = math.abs(resolution)
+
 		context.ky = context.T / (context.T + context.sample_interval)
 		context.kx = context.sample_interval / (context.T + context.sample_interval)
 	end
