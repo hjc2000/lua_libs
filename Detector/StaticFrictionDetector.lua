@@ -69,7 +69,7 @@ if true then
 		local current_torque = 0
 
 		Detector.DynamicFrictionDetector.Detect()
-		right_torque = Detector.DynamicFrictionDetector.Result() + 50
+		right_torque = Detector.DynamicFrictionDetector.Result() + 10
 		if (right_torque > 100) then
 			print("right_torque 超过100，为：", right_torque, "现限幅到100")
 			right_torque = 100
