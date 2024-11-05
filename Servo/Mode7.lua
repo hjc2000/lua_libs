@@ -45,6 +45,7 @@ if (true) then
 		function Servo.Configure()
 			-- 配置成模式 7
 			Servo.Param.Set(1, 1, 7)
+			Servo.Param.SetPulseCountPerCircle(0)
 
 			-- 定位结束最小 OFF 持续时间
 			Servo.Param.Set(1, 34, 20)
