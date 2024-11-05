@@ -45,7 +45,7 @@ if (true) then
 		function Servo.Configure()
 			-- 配置成模式 7
 			Servo.Param.Set(1, 1, 7)
-			Servo.Param.SetPulseCountPerCircle(0)
+			Servo.Param.SetPulseCountPerCircle(30000)
 
 			-- 定位结束最小 OFF 持续时间
 			Servo.Param.Set(1, 34, 20)
@@ -152,7 +152,7 @@ if (true) then
 		--- 设置绝对的圈数并运行
 		--- @param value number
 		function Servo.SetAbsoluteCircleCountAndRun(value)
-			Servo.SetAbsolutePositionAndRun(value * Servo.Feedback.OneCirclePosition())
+			Servo.SetAbsolutePositionAndRun(value * Servo.Param.PulseCountPerCircle())
 		end
 
 		--- 设置绝对转矩并运行
