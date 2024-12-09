@@ -74,7 +74,9 @@ if (true) then
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
+			--36
 			Servo.EI.Set(12, false)
+			--38
 			Servo.EI.Set(13, false)
 		end
 
@@ -86,7 +88,9 @@ if (true) then
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
+			--36
 			Servo.EI.Set(12, true)
+			--38
 			Servo.EI.Set(13, false)
 		end
 
@@ -98,7 +102,9 @@ if (true) then
 			Servo.EI.SetForwardSignal(false)
 			Servo.CancelPositioning()
 
+			--36
 			Servo.EI.Set(12, false)
+			--38
 			Servo.EI.Set(13, true)
 		end
 	end
